@@ -131,11 +131,6 @@ $(document).ready(function () {
 
 <p>Read in Libraries</p>
 <p>Read in data from <a href="https://knb.ecoinformatics.org/#view/df35b.304.2">Mike Byerly. 2016. Alaska commercial salmon catches by management region (1886- 1997). Gulf of Alaska Data Portal</a></p>
-<pre class="r"><code>catch_url &lt;- url(&quot;https://knb.ecoinformatics.org/knb/d1/mn/v2/object/df35b.302.1&quot;, method = &quot;libcurl&quot;)
-                  
-catch_df &lt;- read.csv(catch_url, 
-                     stringsAsFactors = FALSE)
-head(catch_df)</code></pre>
 <pre><code>##   Region Year Chinook Sockeye Coho Pink Chum All notesRegCode
 ## 1    SSE 1886       0       5    0    0    0   5             
 ## 2    SSE 1887       0     155    0    0    0 155             
@@ -143,6 +138,34 @@ head(catch_df)</code></pre>
 ## 4    SSE 1889       0     182   11   92    0 285             
 ## 5    SSE 1890       0     251   42    0    0 292             
 ## 6    SSE 1891       0     274   24    0    0 298</code></pre>
+<pre><code>##   Region Year Chinook Sockeye Coho Pink Chum
+## 1    SSE 1886       0       5    0    0    0
+## 2    SSE 1887       0     155    0    0    0
+## 3    SSE 1888       0     224   16    0    0
+## 4    SSE 1889       0     182   11   92    0
+## 5    SSE 1890       0     251   42    0    0
+## 6    SSE 1891       0     274   24    0    0</code></pre>
+<p>Move from wide to long format using gather and rename catch column to reflect units</p>
+<pre><code>##   Region Year species catchThousands
+## 1    SSE 1886 Chinook              0
+## 2    SSE 1887 Chinook              0
+## 3    SSE 1888 Chinook              0
+## 4    SSE 1889 Chinook              0
+## 5    SSE 1890 Chinook              0
+## 6    SSE 1891 Chinook              0</code></pre>
+<pre><code>## [1] &quot;I&quot;</code></pre>
+<ol style="list-style-type: decimal">
+<li>turn I into 1 in the catch_thousands column</li>
+<li>coerce catch_thousands into integer type</li>
+<li>convert catch_thousands to catch</li>
+</ol>
+<pre><code>##      Region Year species catchThousands  catch
+## 8535    NOP 1992    Chum            342 342000
+## 8536    NOP 1993    Chum            135 135000
+## 8537    NOP 1994    Chum             84  84000
+## 8538    NOP 1995    Chum             99  99000
+## 8539    NOP 1996    Chum             68  68000
+## 8540    NOP 1997    Chum             97  97000</code></pre>
 
 
 
