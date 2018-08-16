@@ -166,7 +166,8 @@ $(document).ready(function () {
 ## 8538    NOP 1995    Chum             99  99000
 ## 8539    NOP 1996    Chum             68  68000
 ## 8540    NOP 1997    Chum             97  97000</code></pre>
-<p>Data Summarization through Split, Apply, Combine method</p>
+<div id="data-summarization-through-split-apply-combine-method" class="section level1">
+<h1>Data Summarization through Split, Apply, Combine method</h1>
 <pre><code>## # A tibble: 15 x 2
 ##    Region meanCatch
 ##    &lt;chr&gt;      &lt;dbl&gt;
@@ -222,6 +223,57 @@ $(document).ready(function () {
 ## 4 COP    Chinook    47286.           13162.       7
 ## 5 KOD    Chinook     6520            11515.      25
 ## 6 KSK    Chinook    45429.           19688.       7</code></pre>
+</div>
+<div id="do-some-joins" class="section level1">
+<h1>Do some joins</h1>
+<p>Read in regions definition file</p>
+<pre><code>##       code                                  mgmtArea areaClass regionCode
+## 1      GSE              Unallocated Southeast Alaska  mgmtArea          1
+## 2      NSE                 Northern Southeast Alaska  mgmtArea          1
+## 3      SSE                 Southern Southeast Alaska  mgmtArea          1
+## 4      YAK                                   Yakutat  mgmtArea          1
+## 5  PWSmgmt      Prince William Sound Management Area  mgmtArea          2
+## 6      BER Bering River Subarea Copper River Subarea   subarea          2
+## 7      COP                      Copper River Subarea   subarea          2
+## 8      PWS              Prince William Sound Subarea   subarea          2
+## 9      CKI                Cook Inlet Management Area  mgmtArea          2
+## 10     BRB               Bristol Bay Management Area  mgmtArea          2
+## 11     KSK                 Kuskokwim Management Area  mgmtArea          3
+## 12     YUK                     Yukon Management Area  mgmtArea          3
+## 13     NRS              Norton Sound Management Area  mgmtArea          3
+## 14     KTZ                  Kotzebue Management Area  mgmtArea          3
+## 15     KOD                    Kodiak Management Area  mgmtArea          4
+##                                                                                                                                                                                      notes
+## 1                                                             Included are Southeastern Alaska catches which could not be assigned\nto Northern or Southern Southeastern Alaska or Yakutat
+## 2  Northern Southern Alaska includes Districts 9 through 16 from summer straight northwest to and including the fairweather Grounds but excludes Yakutat fisheries unless otherwise noted.
+## 3                                                                                                                                                                                         
+## 4                                                                                                                                                                                         
+## 5                                                                                                             Includes the Bering River and Copper River and Prince William Sound Subareas
+## 6                                                                                                                                                                                         
+## 7                                                                                                                                                                                         
+## 8                                                                                                                                                                                         
+## 9                                                                                                                              Cook Inlet includes Resurrection Bay unless otherwise noted
+## 10                                                                                                                                                                                        
+## 11                                                                                                                                                                                        
+## 12                                                                                                                                                                                        
+## 13                                                                                                                                                                                        
+## 14                                                                                                                                                                                        
+## 15</code></pre>
+<pre><code>##      code                                  mgmtArea
+## 1     GSE              Unallocated Southeast Alaska
+## 2     NSE                 Northern Southeast Alaska
+## 3     SSE                 Southern Southeast Alaska
+## 4     YAK                                   Yakutat
+## 5 PWSmgmt      Prince William Sound Management Area
+## 6     BER Bering River Subarea Copper River Subarea</code></pre>
+<pre><code>##      Region Year species catchThousands  catch               mgmtArea
+## 8535    NOP 1992    Chum            342 342000 NorthPeninsual Subarea
+## 8536    NOP 1993    Chum            135 135000 NorthPeninsual Subarea
+## 8537    NOP 1994    Chum             84  84000 NorthPeninsual Subarea
+## 8538    NOP 1995    Chum             99  99000 NorthPeninsual Subarea
+## 8539    NOP 1996    Chum             68  68000 NorthPeninsual Subarea
+## 8540    NOP 1997    Chum             97  97000 NorthPeninsual Subarea</code></pre>
+</div>
 
 
 

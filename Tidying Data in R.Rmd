@@ -64,7 +64,7 @@ catch_df <- catch_df %>%
 tail(catch_df)
 ```
  
-Data Summarization through Split, Apply, Combine method
+#Data Summarization through Split, Apply, Combine method
 
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
@@ -97,6 +97,7 @@ head (catchsd)
 catchyr <- catch_df %>% 
   group_by(Year) %>% 
   summarise (catchMean = mean (catch))
+ 
 
 head (catchyr)
 ```
@@ -114,5 +115,28 @@ catchMean <- catch_df %>%
 
 head (catchMean)
 
+```
+#Do some joins
+
+Read in regions definition file
+
+```{r,warning=FALSE, message=FALSE, echo=FALSE}
+region_defs <- read.csv(url("https://knb.ecoinformatics.org/knb/d1/mn/v2/object/df35b.303.1", method = "libcurl"),
+                        stringsAsFactors = FALSE)
+
+head (region_defs, 15)
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+region_defs <- region_defs %>% 
+  select (code, mgmtArea)
+
+head(region_defs)
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+catchJoined <- left_join(catch_df, region_defs, by = c("Region" = "code"))
+
+tail (catchJoined)
 ```
 
