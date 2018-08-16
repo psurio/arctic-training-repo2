@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Loading Libraries
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 suppressPackageStartupMessages({
   library(leaflet)
   library(dplyr)
@@ -23,7 +23,7 @@ suppressPackageStartupMessages({
 
 #Load Salmon Data from KNB
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 data_url <- "https://knb.ecoinformatics.org/knb/d1/mn/v2/object/knb.92020.1"
 # data_url <- "https://knb.ecoinformatics.org/knb/d1/mn/v2/object/urn%3Auuid%3Af119a05b-bbe7-4aea-93c6-85434dcb1c5e"
 esc <- tryCatch(
@@ -41,7 +41,7 @@ head(esc)
 
 #Calculating Medians
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 medianEsc <- esc %>% 
   separate(sampleDate, c("Year", "Month", "Day"), sep = "-") %>%
   group_by(Species, SASAP.Region, Year, Location) %>%
@@ -55,7 +55,7 @@ head(medianEsc)
 
 #Plot escapement values as bar chart
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 ggplot(medianEsc, aes(Species, medianEsc)) +
   geom_col() +
   coord_flip()
@@ -71,7 +71,7 @@ Starting from daily escapement data again and finding unique locations at which 
 
 Deal with missing values in the location field
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 locations <- esc %>% 
   distinct(Location, Latitude, Longitude) %>% 
   drop_na()
@@ -80,4 +80,24 @@ datatable(locations)
 
 
 ## Draw the map
+
+Using leaflet to make an interactive map
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+leaflet(locations) %>%
+  addTiles () %>% 
+  addMarkers(~ Longitude, ~Latitude, popup = ~ Location)
+
+```
+
+
+Fixing the longitude values so they are not negative
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+
+locs <- locations %>%  mutate(Longitude = abs(Longitude)* -1)
+leaflet(locs) %>% 
+  addTiles() %>% 
+  addMarkers(~ Longitude, ~ Latitude, popup = ~ Location)
+```
 
