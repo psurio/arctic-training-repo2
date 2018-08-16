@@ -9,3 +9,75 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+#Loading Libraries
+
+```{r}
+suppressPackageStartupMessages({
+  library(leaflet)
+  library(dplyr)
+  library(tidyr)
+  library(ggplot2)
+  library(DT)
+})
+```
+
+#Load Salmon Data from KNB
+
+```{r}
+data_url <- "https://knb.ecoinformatics.org/knb/d1/mn/v2/object/knb.92020.1"
+# data_url <- "https://knb.ecoinformatics.org/knb/d1/mn/v2/object/urn%3Auuid%3Af119a05b-bbe7-4aea-93c6-85434dcb1c5e"
+esc <- tryCatch(
+    read.csv("data/escapement.csv", stringsAsFactors = FALSE),
+    error=function(cond) {
+        message(paste(" 
+                      Escapement file does not seem to exist, so get it from the KNB."))
+        esc <- read.csv(url(data_url, method = "libcurl"), stringsAsFactors = FALSE)
+        return(esc)
+    }
+)
+
+head(esc)
+```
+
+#Calculating Medians
+
+```{r}
+medianEsc <- esc %>% 
+  separate(sampleDate, c("Year", "Month", "Day"), sep = "-") %>%
+  group_by(Species, SASAP.Region, Year, Location) %>%
+  summarize(escapement = sum(DailyCount)) %>% 
+  group_by(Species) %>% 
+  summarise(medianEsc = median (escapement))
+
+
+head(medianEsc)
+```
+
+#Plot escapement values as bar chart
+
+```{r}
+ggplot(medianEsc, aes(Species, medianEsc)) +
+  geom_col() +
+  coord_flip()
+
+```
+
+#Building a map 
+
+Starting from daily escapement data again and finding unique locations at which escapement was measured 
+
+
+##Find unique location points
+
+Deal with missing values in the location field
+
+```{r}
+locations <- esc %>% 
+  distinct(Location, Latitude, Longitude) %>% 
+  drop_na()
+datatable(locations)
+```
+
+
+## Draw the map
+
