@@ -166,6 +166,62 @@ $(document).ready(function () {
 ## 8538    NOP 1995    Chum             99  99000
 ## 8539    NOP 1996    Chum             68  68000
 ## 8540    NOP 1997    Chum             97  97000</code></pre>
+<p>Data Summarization through Split, Apply, Combine method</p>
+<pre><code>## # A tibble: 15 x 2
+##    Region meanCatch
+##    &lt;chr&gt;      &lt;dbl&gt;
+##  1 ALU       40384.
+##  2 BER       16373.
+##  3 BRB     2709796.
+##  4 CHG      315487.
+##  5 CKI      683571.
+##  6 COP      179223.
+##  7 GSE      133841.
+##  8 KOD     1528350 
+##  9 KSK       67642.
+## 10 KTZ       18836.
+## 11 NOP      229493.
+## 12 NRS       51503.
+## 13 NSE     1825021.
+## 14 PWS     1419237.
+## 15 SOP     1110942.</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   Region rangeCatchLow rangeCatchHigh
+##   &lt;chr&gt;          &lt;dbl&gt;          &lt;dbl&gt;
+## 1 ALU                0        2597000
+## 2 BER                0         419000
+## 3 BRB                0       44269000
+## 4 CHG                0        2997000
+## 5 CKI                0        9718000
+## 6 COP                0        2986000</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   Region catchStandardDev num_obs
+##   &lt;chr&gt;             &lt;dbl&gt;   &lt;int&gt;
+## 1 ALU             223402.     435
+## 2 BER              41542.     510
+## 3 BRB            6554344.     570
+## 4 CHG             508517.     550
+## 5 CKI            1089900.     525
+## 6 COP             337259.     470</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##    Year catchMean
+##   &lt;int&gt;     &lt;dbl&gt;
+## 1  1878         0
+## 2  1879         0
+## 3  1880         0
+## 4  1881         0
+## 5  1882      5900
+## 6  1883     19800</code></pre>
+<pre><code>## # A tibble: 6 x 5
+## # Groups:   Region [6]
+##   Region species catchMean catchStandardDev num_obs
+##   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;            &lt;dbl&gt;   &lt;int&gt;
+## 1 BRB    Chinook    32957.           40568.      23
+## 2 CHG    Chinook     2737.            5031.      19
+## 3 CKI    Chinook    19071.            4665.      14
+## 4 COP    Chinook    47286.           13162.       7
+## 5 KOD    Chinook     6520            11515.      25
+## 6 KSK    Chinook    45429.           19688.       7</code></pre>
 
 
 

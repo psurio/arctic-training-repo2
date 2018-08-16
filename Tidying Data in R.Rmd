@@ -64,3 +64,55 @@ catch_df <- catch_df %>%
 tail(catch_df)
 ```
  
+Data Summarization through Split, Apply, Combine method
+
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+catchRegionSummary <- catch_df %>% 
+  group_by(Region) %>% 
+  summarise(meanCatch = mean (catch, na.rm = T))
+
+head (catchRegionSummary, 15)
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+catchRange <- catch_df %>% 
+  group_by(Region) %>% 
+  summarise(rangeCatchLow = range(catch)[1], rangeCatchHigh = range (catch) [2])
+
+head (catchRange)
+
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+catchsd <- catch_df %>% 
+  group_by(Region) %>% 
+  summarise (catchStandardDev = sd (catch),
+             num_obs = n())
+
+head (catchsd)
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+catchyr <- catch_df %>% 
+  group_by(Year) %>% 
+  summarise (catchMean = mean (catch))
+
+head (catchyr)
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+#filter for Chinook
+catchMean <- catch_df %>% 
+  filter (Year > 1990 | Year < 1900) %>% 
+  group_by(Region, species) %>% 
+  summarise(catchMean = mean (catch, na.rm = T),
+            catchStandardDev = sd (catch, na.rm = T),
+            num_obs = n()) %>% 
+  filter(catchMean >2000) %>% 
+  filter (species == "Chinook")
+
+head (catchMean)
+
+```
+
